@@ -16,8 +16,7 @@ namespace SmallArray
       rw [apply_ite (fun x => Prod.snd x)]
       rw [apply_ite (fun x => Prod.fst x)]
       simp only [ite_eq_left_iff, not_lt, ite_self, and_true]
-      have h: 1 < arr.val.size:= arr.property
-      apply Nat.not_le_of_lt h
+      apply Nat.not_le_of_lt arr.property
 
   @[simp] theorem push_pop? {α : Type u} (sa: SmallArray α) (val: α):
     let (sa', val') := (sa.push val).pop?
