@@ -20,7 +20,7 @@ theorem array_two_elems_length (n m: α):
 
 theorem array_preserves_condition (arr: nEmptyArray α) (val: α):
   1 < (arr.val.push val).size:= by
-  simp_arith
+  simp only [Array.size_push, lt_add_iff_pos_left]
   apply Nat.le_of_lt
   exact arr.property
 
@@ -31,7 +31,7 @@ theorem non_empty_array_last (arr: Array α) (h: 0 < arr.size):
 
 theorem non_empty_array_pop (arr: Array α):
   arr.pop.size = arr.size - 1:= by
-  simp
+  simp only [Array.size_pop, ge_iff_le]
 
 namespace SmallArray
   def size {α : Type u} (sa: SmallArray α): Nat:=
@@ -48,8 +48,9 @@ namespace SmallArray
 
   @[simp] theorem push_size (sa: SmallArray α) (val: α):
     0 < (sa.push val).size:= by
-    simp [size, push]
+    simp only [size, push]
     cases sa
+    -- TODO: `only` this `simp`
     <;> simp
 
   def pop {α : Type u} (sa: SmallArray α) (h: 0 < sa.size) :=
@@ -64,7 +65,7 @@ namespace SmallArray
       have h'': 0 < arr'.size:= by
         have h: arr'.size = arr.val.size - 1:=  non_empty_array_pop arr.val
         rw [h]
-        simp [Nat.lt_pred_iff]
+        simp only [ge_iff_le, tsub_pos_iff_lt, gt_iff_lt]
         exact arr.property
       if h': 1 < arr'.size then 
         (Array ⟨arr', h'⟩, val)
