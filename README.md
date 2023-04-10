@@ -1,2 +1,3 @@
 # SmallArray
-Implementation of SmallVecs in Lean. Project mostly for self education purposes
+
+This is a WIP library for `SmallVec`s in Lean4.
