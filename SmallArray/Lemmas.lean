@@ -7,15 +7,10 @@ namespace SmallArray
     cases sa
     <;> simp [push, pop, Array.size_pop, ge_iff_le, and_self,
       Array.get_eq_getElem]
-    <;> try rfl
-    . apply And.intro
-      . simp only [Array.get, GetElem.getElem, List.get]
-      . simp only [GetElem.getElem, Fin.mk_one, Array.get_eq_getElem, Fin.val_one]
-        rfl
+    case Some _ =>
+      simp only [Array.get, GetElem.getElem, List.get]
     case Array arr =>
-      rw [apply_ite (fun x => Prod.snd x)]
-      rw [apply_ite (fun x => Prod.fst x)]
-      simp only [ite_eq_left_iff, not_lt, ite_self, and_true]
+      simp only [apply_ite, ite_eq_left_iff, not_lt, ite_self, and_true]
       apply Nat.not_le_of_lt arr.property
 
   @[simp] theorem push_pop? {α : Type u} (sa: SmallArray α) (val: α):
